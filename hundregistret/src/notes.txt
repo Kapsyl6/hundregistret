@@ -1,0 +1,62 @@
+
+
+NumberComparator
+
+import java.util.Comparator;
+
+public class NumberComparator implements Comparator <Number> {
+
+    public int compare(Number first, Number second) {
+        if(first.getValue() < second.getValue())
+            return -1;
+        if(first.getValue() < second.getValue())
+                return 1;
+            
+        return 0;
+
+    }
+
+    
+}
+
+
+
+// Frej Guste kagu7440 
+
+import java.util.Comparator;
+
+public class DogTailNameComparator implements Comparator <Dog> {
+
+    private final int multiplicator = 1000;
+    public int compare(Dog firstDog, Dog secondDog) {
+       
+        
+        return (firstDog.getName().compareTo(secondDog.getName())) * ((int)(firstDog.getTailLength() * multiplicator - secondDog.getTailLength() * multiplicator));
+    }
+
+
+    
+} 
+
+
+// Frej Guste kagu7440 
+
+import java.util.Comparator;
+
+public class DogTailNameComparator implements Comparator <Dog> {
+
+    private final int multiplicator = 1000;
+    public int compare(Dog firstDog, Dog secondDog) {
+       
+        int comparedDog = firstDog.getName().compareTo(secondDog.getName());
+
+        if (comparedDog == 0) {
+            comparedDog = (int)(firstDog.getTailLength() * multiplicator - secondDog.getTailLength() * multiplicator);
+        }
+        
+        return comparedDog;
+    }
+
+
+    
+} 

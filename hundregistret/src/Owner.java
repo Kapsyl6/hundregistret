@@ -1,7 +1,7 @@
 // Frej Guste kagu7440
 
 
-public class Owner {
+public class Owner implements Comparable <Owner>{
 
     private final String name;
 
@@ -13,6 +13,11 @@ public class Owner {
     public String getName(){
 
         return this.name;
+    }
+
+    public int compareTo(Owner comparedOwner){
+
+        return getName().compareTo(comparedOwner.getName());
     }
 
     public String toString(){
