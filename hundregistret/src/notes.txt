@@ -262,3 +262,177 @@ public class DogCollection {
 
 
 }   
+
+
+import java.util.Optional;
+
+public class DogManager {
+    private Dog[] dogs;
+    private int size;
+
+    public DogManager(int capacity) {
+        dogs = new Dog[capacity];
+        size = 0;
+    }
+
+    public boolean addDog(Dog d) {
+        if (d == null) return false;
+        for (int i = 0; i < size; i++) {
+            if (dogs[i].getName().equalsIgnoreCase(d.getName())) {
+                return false;
+            }
+        }
+        if (size < dogs.length) {
+            dogs[size] = d;
+            size++;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeDog(String name) {
+        if (name == null || name.isEmpty()) return false;
+
+        int index = -1;
+        for (int i = 0; i < size; i++) {
+            if (dogs[i].getName().equalsIgnoreCase(name)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) return false;
+
+        for (int i = index; i < size - 1; i++) {
+            dogs[i] = dogs[i + 1];
+        }
+        dogs[size - 1] = null;
+        size--;
+        return true;
+    }
+
+    public boolean containsDog(Dog insertDog) {
+        if (insertDog == null) return false;
+        for (int i = 0; i < size; i++) {
+            if (insertDog.getName().equalsIgnoreCase(dogs[i].getName())) {
+                System.out.println(insertDog + " exists within the system.");
+                return true;
+            }
+        }
+        System.out.println("This dog does not exist.");
+        return false;
+    }
+
+    public boolean containsDog(String insertDog) {
+        if (insertDog == null) return false;
+        for (int i = 0; i < size; i++) {
+            if (insertDog.equalsIgnoreCase(dogs[i].getName())) {
+                System.out.println(insertDog + " exists within the system.");
+                return true;
+            }
+        }
+        System.out.println("This dog does not exist.");
+        return false;
+    }
+
+    public Optional<Dog> getDog(String name) {
+        if (name == null) return Optional.empty();
+        for (int i = 0; i < size; i++) {
+            if (dogs[i].getName().equalsIgnoreCase(name)) {
+                return Optional.of(dogs[i]);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Dog[] getDogs() {
+        Dog[] returnArray = new Dog[size];
+        System.arraycopy(dogs, 0, returnArray, 0, size);
+        DogSorter.sortDogs(new DogNameComparator(), returnArray);
+        return returnArray;
+    }
+
+    public Dog[] getFilteredDogsByTailLength(double minimumTailLength) {
+        Dog[] filteredDogs = new Dog[size];
+        int filteredSize = 0;
+        for (int i = 0; i < size; i++) {
+            if (dogs[i].getTailLength() >= minimumTailLength) {
+                filteredDogs[filteredSize++] = dogs[i];
+            }
+        }
+
+        Dog[] resultArray = new Dog[filteredSize];
+        System.arraycopy(filteredDogs, 0, resultArray, 0, filteredSize);
+        DogSorter.sortDogs(
+            (firstDog, secondDog) -> {
+                int result = Double.compare(firstDog.getTailLength(), secondDog.getTailLength());
+                if (result == 0) {
+                    result = firstDog.getName().compareToIgnoreCase(secondDog.getName());
+                }
+                return result;
+            },
+            resultArray
+        );
+        return resultArray;
+    }
+}
+
+
+Efter 3.3
+
+// 3.3
+    public boolean addDog(Dog d){
+        if (d.getOwner().orElse(null) != this) {
+            return false;  // Hund har inte rätt ägare
+        }
+
+        if (!dogs.contains(d)) {
+            dogs.add(d);
+            dogs.sort((d1, d2) -> d1.getName().compareTo(d2.getName()));  // Sortera hundar alfabetiskt
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean removeDog(Dog d){
+        if (dogs.contains(d)) {
+            dogs.remove(d);
+            d.setOwner(null);  // Ta bort ägaren från hunden
+            return true;
+        }
+        return false;
+    }
+
+    public ArrayList<Dog> getDogs(){
+        return new ArrayList<>(dogs);  // Returnera en kopia av listan
+    }
+
+    public boolean hasDog(Dog d){
+        return dogs.contains(d);
+    }
+
+    public Optional<Owner> getOwner(){
+        return Optional.ofNullable(owner);
+    }
+
+    public boolean setOwner(Owner o){
+        if (this.owner != null && o != null) {
+            return false;  // Hund har redan en ägare
+        }
+        
+        if (this.owner != null) {
+            Owner previousOwner = this.owner;
+            this.owner = null;
+            previousOwner.removeDog(this);
+            return true;
+        }
+
+        this.owner = o;
+
+        if (o != null && !o.hasDog(this)) {
+            o.addDog(this);
+        }
+
+        return true;
+    }

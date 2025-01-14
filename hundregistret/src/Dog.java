@@ -1,5 +1,6 @@
 // Frej Guste kagu7440
 
+
 public class Dog {
 
     private String name;
@@ -8,6 +9,7 @@ public class Dog {
     private int weight;
     private double tailLength;
     private final double dachshundTailLength = 3.7;
+    private Owner owner;
 
     public Dog(String name, String breed, int age, int weight){
         this.name = name.toUpperCase();
@@ -67,6 +69,28 @@ public class Dog {
         "', age=" + age + 
         ", weight=" + weight + 
         ", tailLength=" + tailLength + 
+        ", owner= " +  ((getOwner() == null) ? "owner missing" : owner.getName()) +
         "}";
+    }
+
+    public boolean setOwner(Owner newOwner) {
+        
+        if (newOwner == null) {
+            Owner oldOwner = owner;
+            owner = null;
+            if (oldOwner != null){
+                oldOwner.removeDog(this);
+            }
+            return true;
+        } else if (owner == null) {
+            owner = newOwner;
+            owner.addDog(this); 
+            return true;
+        } 
+        return false;
+    }
+
+    public Owner getOwner(){
+        return this.owner;
     }
 }
