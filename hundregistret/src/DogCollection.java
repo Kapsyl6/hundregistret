@@ -5,8 +5,8 @@ import java.util.Optional;
 
 public class DogCollection {
     private ArrayList<Dog> dogs = new ArrayList<>();
-
-    
+        
+        
     public DogCollection() {
     }
 
