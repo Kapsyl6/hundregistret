@@ -25,7 +25,7 @@ public class Dog {
         }
     }
 
-    // Calculate the tail length based on age and weight
+    // Calculate the tail ilength based on age and weght
     private double calculateTailLength() {
         return Math.round(age * (weight / 10.0) * 10.0) / 10.0;
     }
