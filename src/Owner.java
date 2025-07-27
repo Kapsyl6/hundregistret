@@ -8,7 +8,7 @@ public class Owner implements Comparable<Owner> {
 
     public Owner(String name) {
         this.listedDogs = new ArrayList<Dog>();
-        this.name = name.toUpperCase();   
+        this.name = name.toUpperCase();
     }
 
     public String getName() {
@@ -18,9 +18,8 @@ public class Owner implements Comparable<Owner> {
     public int compareTo(Owner comparedOwner) {
         return getName().compareTo(comparedOwner.getName());
     }
-/* 
-    public boolean addDog(Dog dog) {
 
+    public boolean addDog(Dog dog) {
         if (dog == null) {
             return false;
         }
@@ -36,17 +35,16 @@ public class Owner implements Comparable<Owner> {
         }
         return false;
     }
-}
-    */
+
     public boolean removeDog(Dog dog) {
         // Äger ägaren den här dog
         if (dog == null) return false;
 
         if (listedDogs.contains(dog)){
             listedDogs.remove(dog);
-           /* if (dog.getOwner() != null && dog.getOwner() == this){
+            if (dog.getOwner() != null && dog.getOwner() == this){
                 dog.setOwner(null);
-            } */
+            }
             return true;
         }
 
@@ -55,7 +53,7 @@ public class Owner implements Comparable<Owner> {
 
     public ArrayList<Dog> getDogs() {
         ArrayList<Dog> dogsCopy = new ArrayList<>(listedDogs);
-       // dogsCopy.sort((d1, d2) -> d1.getName().compareTo(d2.getName()));
+        // dogsCopy.sort((d1, d2) -> d1.getName().compareTo(d2.getName()));
         return dogsCopy;
     }
 
@@ -64,7 +62,7 @@ public class Owner implements Comparable<Owner> {
         if (!listedDogs.isEmpty()) {
             result.append(", listedDogs=");
             result.append(listedDogs.stream()
-             //       .map(Dog::getName)
+                    .map(Dog::getName)
                     .sorted()
                     .toList());
         }
