@@ -1,0 +1,537 @@
+
+
+NumberComparator
+
+import java.util.Comparator;
+
+public class NumberComparator implements Comparator <Number> {
+
+    public int compare(Number first, Number second) {
+        if(first.getValue() < second.getValue())
+            return -1;
+        if(first.getValue() < second.getValue())
+                return 1;
+            
+        return 0;
+
+    }
+
+    
+}
+
+
+
+// Frej Guste kagu7440 
+
+import java.util.Comparator;
+
+public class DogTailNameComparator implements Comparator <Dog> {
+
+    private final int multiplicator = 1000;
+    public int compare(Dog firstDog, Dog secondDog) {
+       
+        
+        return (firstDog.getName().compareTo(secondDog.getName())) * ((int)(firstDog.getTailLength() * multiplicator - secondDog.getTailLength() * multiplicator));
+    }
+
+
+    
+} 
+
+
+// Frej Guste kagu7440 
+
+import java.util.Comparator;
+
+public class DogTailNameComparator implements Comparator <Dog> {
+
+    private final int multiplicator = 1000;
+    public int compare(Dog firstDog, Dog secondDog) {
+       
+        int comparedDog = firstDog.getName().compareTo(secondDog.getName());
+
+        if (comparedDog == 0) {
+            comparedDog = (int)(firstDog.getTailLength() * multiplicator - secondDog.getTailLength() * multiplicator);
+        }
+        
+        return comparedDog;
+    }
+
+
+    
+} 
+
+
+
+import java.util.ArrayList;
+import java.util.Comparator;
+
+public class DogSorter implements Comparator <Dog> {
+
+    
+    private final int multiplicator = 1000;
+    
+
+    private static void swapDogs(ArrayList <Dog> dogList, int firstIndex, int secondIndex ){
+
+        Dog firstDog = dogList.get(firstIndex);
+        Dog secondDog = dogList.get(secondIndex);
+
+        dogList.set(firstIndex, secondDog);
+        dogList.set(secondIndex, firstDog);
+   }
+
+   /**  1. En Comparator som bestämmer hur hundarna ska jämföras, 
+
+        2. Listan av hundar som ska sökas igenom
+        
+        3. Varifrån metoden ska börja söka   
+   */
+   
+   private static int nextDog(Comparator<Dog> comparator, ArrayList<Dog> dogList, int startIndex) {
+        int bestIndex = startIndex;
+        for (int i = startIndex + 1; i < dogList.size(); i++){
+            if (comparator.compare(dogList.get(i), dogList.get(bestIndex)) < 0 ){
+                bestIndex = i;
+            }
+        }
+        
+        
+        return bestIndex;
+}
+
+@Override
+public int compare(Dog o1, Dog o2) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'compare'");
+}
+
+
+}
+
+
+import java.util.ArrayList;
+
+public class DogSorter {
+
+    private final int multiplicator = 1000;
+
+    private static void swapDogs(ArrayList<Dog> dogList, int firstIndex, int secondIndex) {
+        Dog firstDog = dogList.get(firstIndex);
+        Dog secondDog = dogList.get(secondIndex);
+
+        dogList.set(firstIndex, secondDog);
+        dogList.set(secondIndex, firstDog);
+    }
+
+    /**  
+     *  1. Listan av hundar som ska sökas igenom
+     *  2. Varifrån metoden ska börja söka   
+     */
+    private static int nextDog(ArrayList<Dog> dogList, int startIndex) {
+        int bestIndex = startIndex;
+        TailLengthComparator comparator = new TailLengthComparator(); // Skapar en instans av Comparator
+        for (int i = startIndex + 1; i < dogList.size(); i++) {
+            if (comparator.compare(dogList.get(i), dogList.get(bestIndex)) < 0) {
+                bestIndex = i;
+            }
+        }
+
+        return bestIndex;
+    }
+}
+
+import java.util.ArrayList;
+import java.util.Comparator;
+
+public class DogSorter implements Comparator <Dog> {
+
+    
+    private final int multiplicator = 1000;
+    
+
+    private static void swapDogs(ArrayList <Dog> dogList, int firstIndex, int secondIndex ){
+
+        Dog firstDog = dogList.get(firstIndex);
+        Dog secondDog = dogList.get(secondIndex);
+
+        dogList.set(firstIndex, secondDog);
+        dogList.set(secondIndex, firstDog);
+   }
+
+   /**  1. En Comparator som bestämmer hur hundarna ska jämföras, 
+
+        2. Listan av hundar som ska sökas igenom
+        
+        3. Varifrån metoden ska börja söka   
+   */
+   
+   private static int nextDog(Comparator<Dog> comparator, ArrayList<Dog> dogList, int startIndex) {
+        int bestIndex = startIndex;
+        for (int i = startIndex + 1; i < dogList.size(); i++){
+            if (comparator.compare(dogList.get(i), dogList.get(bestIndex)) < 0 ){
+                bestIndex = i;
+            }
+        }
+        
+        
+        return bestIndex;
+}
+
+
+}
+
+
+import java.util.ArrayList;
+import java.util.Optional;
+
+public class DogCollection {
+    
+    private ArrayList<Dog> dogList = new ArrayList<>();
+
+        //Lägger till en hund till samlingen
+    public boolean addDog(Dog d){ 
+        for (Dog dog : dogList) {
+            if (dog.getName().equalsIgnoreCase(d.getName())){
+                return false;
+            }
+        }
+        dogList.add(d);
+        return true;
+    }
+        // Tar bort en hund från samlingen om denna existerar
+    public boolean removeDog(Dog d){ 
+        if (dogList.contains(d)){
+            dogList.remove(d);
+            return true;
+        }
+        return false;
+    }
+    
+        // Returnerar om samlingen innehåller den givna hunden eller inte
+    public boolean containsDog(Dog insertDog){ 
+        for (Dog i : dogList){
+            if (insertDog.getName().equals(i.getName())){
+                System.out.println(insertDog + " exists within the system.");
+                return true;
+            }
+        }
+        System.out.println("This dog does not exist.");
+        return false;
+    }
+    public boolean containsDog(String insertDog){
+        for (Dog i : dogList){
+            if (insertDog.equalsIgnoreCase(i.getName())){
+                System.out.println(insertDog + " exists within the system.");
+                return true;
+            }
+        }
+        System.out.println( "This dog does not exist.");
+        return false;
+    }
+
+        // Returnerar hunden med det givna namnet, annars null
+    public Optional<Dog> getDog(String name){
+        for (Dog dog : dogList){
+            if (dog.getName().equals(name)){
+                return Optional.of(dog);
+            }
+        }
+        return Optional.empty();
+    }
+
+        // Returnerar samtliga hundar
+    public ArrayList<Dog> getDogs(){
+        ArrayList<Dog> returnList = new ArrayList<Dog>(dogList);
+        DogSorter.sortDogs(new DogNameComparator(), returnList);
+        return returnList;
+    }
+
+    public ArrayList<Dog> getDogsWithTail(int minimumTailLength, ArrayList<Dog> dogList){
+
+        ArrayList<Dog> filteredDogs = new ArrayList<>();
+        for (Dog dog : dogList) {
+            if (dog.getTailLength() >= minimumTailLength) {
+                filteredDogs.add(dog);
+            }
+        }
+        DogSorter.sortDogs((firstDog, secondDog) -> Double.compare(firstDog.getTailLength() ,secondDog.getTailLength()), filteredDogs);
+        return filteredDogs;
+    }
+        
+
+
+}   
+
+
+import java.util.Optional;
+
+public class DogManager {
+    private Dog[] dogs;
+    private int size;
+
+    public DogManager(int capacity) {
+        dogs = new Dog[capacity];
+        size = 0;
+    }
+
+    public boolean addDog(Dog d) {
+        if (d == null) return false;
+        for (int i = 0; i < size; i++) {
+            if (dogs[i].getName().equalsIgnoreCase(d.getName())) {
+                return false;
+            }
+        }
+        if (size < dogs.length) {
+            dogs[size] = d;
+            size++;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeDog(String name) {
+        if (name == null || name.isEmpty()) return false;
+
+        int index = -1;
+        for (int i = 0; i < size; i++) {
+            if (dogs[i].getName().equalsIgnoreCase(name)) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) return false;
+
+        for (int i = index; i < size - 1; i++) {
+            dogs[i] = dogs[i + 1];
+        }
+        dogs[size - 1] = null;
+        size--;
+        return true;
+    }
+
+    public boolean containsDog(Dog insertDog) {
+        if (insertDog == null) return false;
+        for (int i = 0; i < size; i++) {
+            if (insertDog.getName().equalsIgnoreCase(dogs[i].getName())) {
+                System.out.println(insertDog + " exists within the system.");
+                return true;
+            }
+        }
+        System.out.println("This dog does not exist.");
+        return false;
+    }
+
+    public boolean containsDog(String insertDog) {
+        if (insertDog == null) return false;
+        for (int i = 0; i < size; i++) {
+            if (insertDog.equalsIgnoreCase(dogs[i].getName())) {
+                System.out.println(insertDog + " exists within the system.");
+                return true;
+            }
+        }
+        System.out.println("This dog does not exist.");
+        return false;
+    }
+
+    public Optional<Dog> getDog(String name) {
+        if (name == null) return Optional.empty();
+        for (int i = 0; i < size; i++) {
+            if (dogs[i].getName().equalsIgnoreCase(name)) {
+                return Optional.of(dogs[i]);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Dog[] getDogs() {
+        Dog[] returnArray = new Dog[size];
+        System.arraycopy(dogs, 0, returnArray, 0, size);
+        DogSorter.sortDogs(new DogNameComparator(), returnArray);
+        return returnArray;
+    }
+
+    public Dog[] getFilteredDogsByTailLength(double minimumTailLength) {
+        Dog[] filteredDogs = new Dog[size];
+        int filteredSize = 0;
+        for (int i = 0; i < size; i++) {
+            if (dogs[i].getTailLength() >= minimumTailLength) {
+                filteredDogs[filteredSize++] = dogs[i];
+            }
+        }
+
+        Dog[] resultArray = new Dog[filteredSize];
+        System.arraycopy(filteredDogs, 0, resultArray, 0, filteredSize);
+        DogSorter.sortDogs(
+            (firstDog, secondDog) -> {
+                int result = Double.compare(firstDog.getTailLength(), secondDog.getTailLength());
+                if (result == 0) {
+                    result = firstDog.getName().compareToIgnoreCase(secondDog.getName());
+                }
+                return result;
+            },
+            resultArray
+        );
+        return resultArray;
+    }
+}
+
+
+Efter 3.3
+
+// 3.3
+    public boolean addDog(Dog d){
+        if (d.getOwner().orElse(null) != this) {
+            return false;  // Hund har inte rätt ägare
+        }
+
+        if (!dogs.contains(d)) {
+            dogs.add(d);
+            dogs.sort((d1, d2) -> d1.getName().compareTo(d2.getName()));  // Sortera hundar alfabetiskt
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean removeDog(Dog d){
+        if (dogs.contains(d)) {
+            dogs.remove(d);
+            d.setOwner(null);  // Ta bort ägaren från hunden
+            return true;
+        }
+        return false;
+    }
+
+    public ArrayList<Dog> getDogs(){
+        return new ArrayList<>(dogs);  // Returnera en kopia av listan
+    }
+
+    public boolean hasDog(Dog d){
+        return dogs.contains(d);
+    }
+
+    public Optional<Owner> getOwner(){
+        return Optional.ofNullable(owner);
+    }
+
+    public boolean setOwner(Owner o){
+        if (this.owner != null && o != null) {
+            return false;  // Hund har redan en ägare
+        }
+        
+        if (this.owner != null) {
+            Owner previousOwner = this.owner;
+            this.owner = null;
+            previousOwner.removeDog(this);
+            return true;
+        }
+
+        this.owner = o;
+
+        if (o != null && !o.hasDog(this)) {
+            o.addDog(this);
+        }
+
+        return true;
+    }
+
+// Frej Guste kagu7440 
+
+import java.util.Scanner;
+
+public class DogRegister {
+
+    private static final int COMMAND_ONE = 1;
+    private static final int COMMAND_TWO = 2; 
+    private static final int EXIT_COMMAND = 0; 
+
+    private Scanner input;
+    
+    public DogRegister() {
+        input = new Scanner(System.in);
+    }
+    
+    private void start() {
+        initialize();
+        runCommandLoop();
+        shutDown();
+    }
+
+    private void initialize() {
+        System.out.println("Initializing program");
+        System.out.print("?> ");
+    }
+
+    private void runCommandLoop() {
+        int command;
+        do {
+            command = readCommand();
+            handleCommand(command);
+            if (command != EXIT_COMMAND) {
+                System.out.print("?> ");
+            }
+        } while (command != EXIT_COMMAND);
+    }
+
+    private boolean isNumeric(String str) {
+        if (str == null || str.length() == 0) {
+            return false;
+        }
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private int readCommand() {
+        String commandStr = input.nextLine().trim();
+        
+        if (commandStr.equalsIgnoreCase("exit")) {
+            return EXIT_COMMAND;
+        }
+        
+        if (isNumeric(commandStr)) {
+            return Integer.parseInt(commandStr);
+        }
+        
+        System.out.println("Error: illegal command!");
+        return -1;
+    }
+
+    private void handleCommand(int command) {
+        switch(command) {
+            case COMMAND_ONE:
+                commandOneMethod();
+                break;
+            case COMMAND_TWO:
+                commandTwoMethod();
+                break;
+            case EXIT_COMMAND:
+                break;
+            case -1:
+                break;
+            default:
+                System.out.println("Error: illegal command!");
+        }
+    }
+
+    private void commandOneMethod() {
+        System.out.println("Command one executing");
+    }
+
+    private void commandTwoMethod() {
+        System.out.println("Command two executing");
+    }
+
+    private void shutDown() {
+        System.out.println("Shutting down");
+    }
+
+    public static void main(String[] args) {
+        new DogRegister().start();
+    }
+}
