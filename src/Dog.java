@@ -25,7 +25,7 @@ public class Dog {
         }
     }
 
-    // Calculate the tail length based on age and weight
+
     private double calculateTailLength() {
         return Math.round(age * (weight / 10.0) * 10.0) / 10.0;
     }
@@ -68,23 +68,27 @@ public class Dog {
         "', breed='" + breed + 
         "', age=" + age + 
         ", weight=" + weight + 
-        ", tailLength=" + tailLength + 
-      //   ", owner= " +  ((getOwner() == null) ? "owner missing" : owner.getName()) +
+        ", tailLength=" + tailLength +
+        ", owner= " +  ((getOwner() == null) ? "owner missing" : owner.getName()) +
         "}";
     }
 
-    public boolean setOwner(Owner newOwner) {
-        
-        if (newOwner == null) {
+    public boolean setOwner(Owner newOwner)
+    {
+        if (newOwner == null)
+        {
             Owner oldOwner = owner;
             owner = null;
-            if (oldOwner != null){
-             //   oldOwner.removeDog(this);
+            if (oldOwner != null)
+            {
+                oldOwner.removeDog(this);
             }
             return true;
-        } else if (owner == null) {
+        }
+        else if (owner == null)
+        {
             owner = newOwner;
-           //  owner.addDog(this); 
+             owner.addDog(this);
             return true;
         } 
         return false;

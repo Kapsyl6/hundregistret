@@ -3,7 +3,7 @@
 import java.util.Comparator;
 
 /** Jämförelsen matar ut en integer
- *      Ex)
+ *      Ex
  *     -1 => Första kommer tidigare i alfabetet
  *      0 => De har samma  lexikaliska plats
  *      1 => Andra kommer tidigare i alfabetet
